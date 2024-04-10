@@ -298,7 +298,9 @@ class MediaDownloader : MessagingRuleFeature("MediaDownloader", MessagingRuleTyp
         }?.let { playlistGroup ->
             val playlistGroupString = playlistGroup.toString()
 
-            val storyUserId = paramMap["TOPIC_SNAP_CREATOR_USER_ID"]?.toString() ?: if (playlistGroupString.contains("storyUserId=")) {
+            val storyUserId = paramMap["TOPIC_SNAP_CREATOR_USER_ID"]?.toString() ?: paramMap["PLAYABLE_STORY_SNAP_RECORD"]?.toString()?.let {
+                if (it.contains("userId=")) it.substringAfter("userId=").substringBefore(",") else null
+            } ?: if (playlistGroupString.contains("storyUserId=")) {
                 playlistGroupString.substringAfter("storyUserId=").substringBefore(",")
             } else {
                 //story replies
