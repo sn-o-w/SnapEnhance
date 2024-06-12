@@ -85,8 +85,10 @@ namespace util {
 
             auto new_prot = (flags[0] == 'r' ? PROT_READ : 0) | (flags[1] == 'w' ? PROT_WRITE : 0) | (flags[2] == 'x' ? PROT_EXEC : 0);
             if (remove_read_permission && flags[0] == 'r' && flags[2] == 'x') {
+                LOGD("removing read permission for %s", strrchr(buff, ' ') + 1);
                 new_prot &= ~PROT_READ;
             }
+            LOGD("remapping %s 0x%zx-0x%zx", strrchr(buff, ' ') + 1, start, end);
             mprotect((void *)start, section_size, new_prot);
         }
         fclose(maps);
