@@ -96,11 +96,11 @@ void JNICALL lock_database(JNIEnv *env, jobject, jstring database_name, jobject 
 void JNICALL hide_anonymous_dex_files(JNIEnv *, jobject) {
     util::remap_sections([](const std::string &line, size_t size) {
         return (
-            (size == PAGE_SIZE && line.find("r-xp 00000000") != std::string::npos && line.find("[v") == std::string::npos) ||
+            (size == PAGE_SIZE && line.find("r-xp 00000000 00") != std::string::npos && line.find("[v") == std::string::npos) ||
             line.find("dalvik-DEX") != std::string::npos ||
             line.find("dalvik-classes") != std::string::npos
         );
-    });
+    }, true);
 }
 
 extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *_) {
@@ -119,7 +119,7 @@ extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *_) {
     env->RegisterNatives(env->FindClass(std::string(BUILD_NAMESPACE "/NativeLib").c_str()), methods.data(), methods.size());
     util::remap_sections([](const std::string &line, size_t size) {
         return line.find(BUILD_PACKAGE) != std::string::npos;
-    });
+    }, false);
     hide_anonymous_dex_files(env, nullptr);
     return JNI_VERSION_1_6;
 }
