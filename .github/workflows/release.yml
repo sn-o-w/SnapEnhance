@@ -42,7 +42,7 @@ jobs:
         
       - name: Sign APK
         id: sign_app
-        uses: noriban/sign-android-release@v1
+        uses: noriban/sign-android-release@v5
         with:
           releaseDirectory: app/build/outputs/apk/armv8/release/
           signingKeyBase64: ${{ secrets.JAVA_KEYSTORE_DATA }}
@@ -88,7 +88,7 @@ jobs:
 
       - name: Sign APK
         id: sign_app
-        uses: noriban/sign-android-release@v1
+        uses: noriban/sign-android-release@v5
         with:
           releaseDirectory: app/build/outputs/apk/armv7/release/
           signingKeyBase64: ${{ secrets.JAVA_KEYSTORE_DATA }}
@@ -134,7 +134,7 @@ jobs:
 
       - name: Sign APK
         id: sign_app
-        uses: noriban/sign-android-release@v1
+        uses: noriban/sign-android-release@v5
         with:
           releaseDirectory: app/build/outputs/apk/all/release/
           signingKeyBase64: ${{ secrets.JAVA_KEYSTORE_DATA }}
@@ -177,7 +177,7 @@ jobs:
 
       - name: Sign APK
         id: sign_app
-        uses: noriban/sign-android-release@v1
+        uses: noriban/sign-android-release@v5
         with:
           releaseDirectory: manager/build/outputs/apk/release/
           signingKeyBase64: ${{ secrets.JAVA_KEYSTORE_DATA }}
