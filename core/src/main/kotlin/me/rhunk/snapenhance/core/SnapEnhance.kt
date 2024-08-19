@@ -27,6 +27,7 @@ import me.rhunk.snapenhance.core.ui.InAppOverlay
 import me.rhunk.snapenhance.core.util.LSPatchUpdater
 import me.rhunk.snapenhance.core.util.hook.HookAdapter
 import me.rhunk.snapenhance.core.util.hook.HookStage
+import me.rhunk.snapenhance.core.util.hook.findRestrictedMethod
 import me.rhunk.snapenhance.core.util.hook.hook
 import kotlin.system.measureTimeMillis
 
@@ -188,7 +189,7 @@ class SnapEnhance {
         if (appContext.config.experimental.nativeHooks.globalState != true) return
 
         lateinit var unhook: () -> Unit
-        Runtime::class.java.declaredMethods.first {
+        Runtime::class.java.findRestrictedMethod {
             it.name == "loadLibrary0" && it.parameterTypes.contentEquals(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) arrayOf(Class::class.java, String::class.java)
                 else arrayOf(ClassLoader::class.java, String::class.java)
