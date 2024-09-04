@@ -1,5 +1,6 @@
 package me.rhunk.snapenhance.ui.util
 
+import android.app.Activity
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
@@ -15,7 +16,7 @@ class ActivityLauncherHelper(
     private var permissionResultLauncher: ActivityResultLauncher<String> =
         activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
             runCatching {
-                callback?.let { it(if (result) ComponentActivity.RESULT_OK else ComponentActivity.RESULT_CANCELED, null) }
+                callback?.let { it(if (result) Activity.RESULT_OK else Activity.RESULT_CANCELED, null) }
             }.onFailure {
                 AbstractLogger.directError("Failed to process activity result", it)
             }
@@ -55,7 +56,7 @@ fun ActivityLauncherHelper.chooseFolder(callback: (uri: String) -> Unit) {
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
     ) { resultCode, intent ->
-        if (resultCode != ComponentActivity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
             return@launch
         }
         val uri = intent?.data ?: return@launch
@@ -77,7 +78,7 @@ fun ActivityLauncherHelper.saveFile(name: String, type: String = "*/*", callback
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
     ) { resultCode, intent ->
-        if (resultCode != ComponentActivity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
             return@launch
         }
         val uri = intent?.data ?: return@launch
@@ -97,7 +98,7 @@ fun ActivityLauncherHelper.openFile(type: String = "*/*", callback: (uri: String
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
     ) { resultCode, intent ->
-        if (resultCode != ComponentActivity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
             return@launch
         }
         val uri = intent?.data ?: return@launch

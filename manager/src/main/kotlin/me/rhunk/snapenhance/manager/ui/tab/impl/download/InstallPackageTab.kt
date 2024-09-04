@@ -1,5 +1,6 @@
 package me.rhunk.snapenhance.manager.ui.tab.impl.download
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -174,7 +175,7 @@ class InstallPackageTab : Tab("install_app") {
                 return
             }
             installPackageCallback = resultCallbacks@{ code ->
-                installStage = if (code != ComponentActivity.RESULT_OK) {
+                installStage = if (code != Activity.RESULT_OK) {
                     InstallStage.ERROR
                 } else {
                     InstallStage.DONE
@@ -208,7 +209,7 @@ class InstallPackageTab : Tab("install_app") {
                             putExtra(Intent.EXTRA_RETURN_RESULT, true)
                         }
                         uninstallPackageCallback = resultCallback@{ resultCode ->
-                            if (resultCode != ComponentActivity.RESULT_OK) {
+                            if (resultCode != Activity.RESULT_OK) {
                                 installStage = InstallStage.ERROR
                                 downloadedFile?.delete()
                                 return@resultCallback

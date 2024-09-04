@@ -2,6 +2,7 @@ package me.rhunk.snapenhance.ui.setup.screens.impl
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -82,7 +82,7 @@ class PermissionsScreen : SetupScreen() {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             activityLauncherHelper.requestPermission(Manifest.permission.POST_NOTIFICATIONS) { resultCode, _ ->
                                 coroutineScope.launch {
-                                    grantedPermissions[perm.translationKey] = resultCode == ComponentActivity.RESULT_OK
+                                    grantedPermissions[perm.translationKey] = resultCode == Activity.RESULT_OK
                                 }
                             }
                         }
