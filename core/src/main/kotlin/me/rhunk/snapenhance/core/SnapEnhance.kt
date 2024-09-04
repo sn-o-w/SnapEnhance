@@ -194,7 +194,7 @@ class SnapEnhance {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) arrayOf(Class::class.java, String::class.java)
                 else arrayOf(ClassLoader::class.java, String::class.java)
             )
-        }.hook(HookStage.AFTER) { param ->
+        }!!.hook(HookStage.AFTER) { param ->
             val libName = param.arg<String>(1)
             if (libName != "client") return@hook
             unhook()
